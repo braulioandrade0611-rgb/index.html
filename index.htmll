@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inkgenio | Dale cuerpo a tus ideas</title>
+    <style>
+        /* Variables de color estilo CMYK moderno */
+        :root {
+            --cyan: #00FFFF;
+            --magenta: #FF00FF;
+            --yellow: #FFFF00;
+            --black: #111111;
+            --dark-gray: #1a1a1a;
+            --white: #FAFAFA;
+        }
+
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* Navegación */
+        header {
+            background-color: rgba(17, 17, 17, 0.95);
+            padding: 15px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--cyan);
+            backdrop-filter: blur(5px);
+        }
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--white);
+            text-decoration: none;
+        }
+        .logo-text span {
+            color: var(--magenta);
+        }
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--yellow);
+        }
+
+        /* Hero / Portada */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle, #2a0845 0%, #111111 80%);
+            padding: 80px 20px 20px 20px;
+        }
+        .hero-img {
+            max-width: 400px;
+            width: 100%;
+            height: 150px; /* Altura de reserva por si no hay imagen */
+            margin-bottom: 30px;
+            filter: drop-shadow(0px 0px 20px rgba(0, 255, 255, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan);
+            font-size: 1.2rem;
+            border: 2px dashed var(--magenta);
+        }
+        .btn {
+            padding: 15px 35px;
+            background-color: var(--magenta);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: var(--cyan);
+            color: var(--black);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--cyan);
+        }
+
+        /* Introducción / Nosotros */
+        .intro {
+            padding: 80px 20px;
+            background-color: var(--dark-gray);
+            text-align: center;
+        }
+        .intro-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--yellow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .intro p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #cccccc;
+        }
+        .intro strong {
+            color: var(--cyan);
+        }
+
+        /* Catálogo de Productos */
+        .catalog {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .catalog-title {
+            color: var(--magenta);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 40px auto 0;
+        }
+        .product-card {
+            background-color: var(--dark-gray);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: transform 0.3s, border-color 0.3s;
+            text-align: left;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.1);
+        }
+        .product-img {
+            width: 100%;
+            height: 200px;
+            background-color: #222; /* Fondo por si no hay imagen aún */
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-info h3 {
+            font-size: 1.4rem;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+        .product-info p {
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        .product-tag {
+            display: inline-block;
+            background-color: rgba(255, 255, 0, 0.1);
+            color: var(--yellow);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Videos */
+        .videos {
+            padding: 80px 20px;
+            background-color: var(--dark-gray);
+            text-align: center;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 40px auto 0;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid var(--magenta);
+            outline: none;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.15);
+            background-color: #000;
+        }
+
+        /* Footer y Contacto */
+        footer {
+            background-color: #0a0a0a;
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 3px solid var(--cyan);
+        }
+        .social-links {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .social-btn {
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            color: var(--black);
+            transition: opacity 0.3s;
+        }
+        .social-btn:hover {
+            opacity: 0.8;
+        }
+        .wa-btn {
+            background-color: #25D366; /* Verde de WhatsApp */
+        }
+        .ig-btn {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: var(--white);
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 768px) {
+            nav {
+                display: none; /* Oculta menú en móviles para limpieza visual */
+            }
+            .hero-img {
+                max-width: 250px;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            .social-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo-text">Ink<span>genio</span></a>
+        <nav>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#catalogo">Catálogo</a>
+            <a href="#galeria">Trabajos</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <!-- AQUÍ VA TU LOGO -->
+        <img src="logo.png" alt="Espacio para logo.png" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; width: 300px; height: 150px; border: 2px dashed var(--magenta); color: var(--cyan); align-items: center; justify-content: center; margin-bottom: 30px; font-weight: bold;">[AQUÍ IRÁ TU LOGO]</div>
+        
+        <h1 style="color: var(--white); font-size: 1.5rem; max-width: 600px; margin-bottom: 20px;">Donde las ideas digitales toman forma física.</h1>
+        <a href="#catalogo" class="btn">Ver Productos</a>
+    </section>
+
+    <section id="nosotros" class="intro">
+        <div class="intro-container">
+            <h2 class="section-title">¿Qué es Inkgenio?</h2>
+            <p>No somos una imprenta tradicional. Somos el puente entre tu imaginación y el mundo real. <strong>Hacemos publicidad de todo tipo</strong>: desde el vinil que decora tu negocio, hasta la lona gigante que atrae miradas, pasando por sublimación y promocionales de alto impacto.</p>
+            <p>¿Por qué somos los mejores? Porque no nos limitamos a imprimir; <strong>materializamos el ingenio</strong>. Tratamos cada diseño digital con una precisión quirúrgica para garantizar colores vibrantes, materiales que duran y acabados impecables. Si lo puedes imaginar, nosotros le damos cuerpo.</p>
+        </div>
+    </section>
+
+    <section id="catalogo" class="catalog">
+        <h2 class="section-title catalog-title">Nuestro Catálogo</h2>
+        <p>Soluciones a la medida de tu marca o proyecto.</p>
+        
+        <div class="grid">
+            <!-- Producto 1 -->
+            <div class="product-card">
+                <img src="tazas.jpg" alt="Espacio para tazas.jpg" class="product-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/><text x=\'50%\' y=\'50%\' fill=\'%23666\' font-family=\'sans-serif\' font-size=\'14\' text-anchor=\'middle\' dominant-baseline=\'middle\'>[Imagen: tazas.jpg]</text></svg>';">
+                <div class="product-info">
+                    <span class="product-tag">Sublimación</span>
+                    <h3>Tazas y Promocionales</h3>
+                    <p>Calidad fotográfica en cerámica, termos y artículos promocionales. Colores que no se borran con las lavadas ni con el tiempo.</p>
+                </div>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="product-card">
+                <img src="playeras.jpg" alt="Espacio para playeras.jpg" class="product-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/><text x=\'50%\' y=\'50%\' fill=\'%23666\' font-family=\'sans-serif\' font-size=\'14\' text-anchor=\'middle\' dominant-baseline=\'middle\'>[Imagen: playeras.jpg]</text></svg>';">
+                <div class="product-info">
+                    <span class="product-tag">Sublimación / Vinil Textil</span>
+                    <h3>Playeras Personalizadas</h3>
+                    <p>Prendas con identidad. Imprimimos tus diseños en textiles de alta calidad, ideales para uniformes, eventos o marcas propias.</p>
+                </div>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="product-card">
+                <img src="viniles.jpg" alt="Espacio para viniles.jpg" class="product-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/><text x=\'50%\' y=\'50%\' fill=\'%23666\' font-family=\'sans-serif\' font-size=\'14\' text-anchor=\'middle\' dominant-baseline=\'middle\'>[Imagen: viniles.jpg]</text></svg>';">
+                <div class="product-info">
+                    <span class="product-tag">Gran Formato</span>
+                    <h3>Viniles y Corte</h3>
+                    <p>Rotulación vehicular, decoración de interiores, escaparates y stickers troquelados. Precisión milimétrica para cualquier superficie.</p>
+                </div>
+            </div>
+
+            <!-- Producto 4 -->
+            <div class="product-card">
+                <img src="lonas.jpg" alt="Espacio para lonas.jpg" class="product-img" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100%\'><rect width=\'100%\' height=\'100%\' fill=\'%23222\'/><text x=\'50%\' y=\'50%\' fill=\'%23666\' font-family=\'sans-serif\' font-size=\'14\' text-anchor=\'middle\' dominant-baseline=\'middle\'>[Imagen: lonas.jpg]</text></svg>';">
+                <div class="product-info">
+                    <span class="product-tag">Gran Formato</span>
+                    <h3>Lonas y Toldos</h3>
+                    <p>Publicidad a lo grande. Materiales súper resistentes al clima y al sol, impresos con tintas de la más alta calidad para destacar a la distancia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeria" class="videos">
+        <h2 class="section-title" style="color: var(--cyan);">Nuestra Magia en Acción</h2>
+        <p style="color: #ccc;">No te lo contamos, te lo demostramos. Mira nuestros procesos.</p>
+        <div class="video-grid">
+            <!-- REEMPLAZA ESTO CON TUS VIDEOS -->
+            <video controls poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='225'><rect width='400' height='225' fill='%23111'/><text x='200' y='112' fill='%23FF00FF' font-family='sans-serif' font-size='16' text-anchor='middle' dominant-baseline='middle'>[Espacio para video1.mp4]</text></svg>">
+                <source src="video1.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+            <video controls poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='225'><rect width='400' height='225' fill='%23111'/><text x='200' y='112' fill='%2300FFFF' font-family='sans-serif' font-size='16' text-anchor='middle' dominant-baseline='middle'>[Espacio para video2.mp4]</text></svg>">
+                <source src="video2.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <h2 class="section-title" style="color: var(--white); font-size: 2rem;">¿Listo para darle cuerpo a tus ideas?</h2>
+        <p style="color: #ccc; margin-bottom: 20px;">Estamos en Guadalajara. Escríbenos y cotiza tu proyecto hoy mismo.</p>
+        
+        <div class="social-links">
+            <!-- Enlace directo a tu WhatsApp -->
+            <a href="https://wa.me/523329537884" target="_blank" class="social-btn wa-btn">💬 WhatsApp</a>
+            <!-- Enlace directo a tu Instagram -->
+            <a href="https://www.instagram.com/inkgenio_gdl" target="_blank" class="social-btn ig-btn">📸 Instagram</a>
+        </div>
+        
+        <p style="margin-top: 40px; font-size: 0.9rem; color: #666;">Teléfono: 33 2953 7884</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; color: #444;">© 2026 Inkgenio. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
